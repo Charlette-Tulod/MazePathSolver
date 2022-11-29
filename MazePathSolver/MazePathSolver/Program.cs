@@ -208,9 +208,10 @@ namespace MazePathSolver
                     if (iRight < iMax && iRight / iCols == iCurrent / iCols)
                         hRight = GetNodeContents(heuristic, iRight);
 
-                    Array.Sort(sequence);          //arrange the heuristic values in assending order
+                    //sort values in assending order
+                    Array.Sort(sequence);          
 
-                    for (int i = 0; i < sequence.Length; i++)   //enqueue the nodes in-order of the arranged array
+                    for (int i = 0; i < sequence.Length; i++)   
                     {
                         if (iTop >= 0)                  //if top node exists
                             if (GetNodeContents(m_iMaze, iTop) == empty)
