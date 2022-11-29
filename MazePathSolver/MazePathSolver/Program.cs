@@ -171,25 +171,25 @@ namespace MazePathSolver
 
             if (gbfs == true)    //GREEDY BEST FIRST SEARCH
             {
-                int X = iStop / 10, Y = iStop % 10;
 
-                //Heuristic value
+                int X = iStop / 10, Y = iStop % 10;
                 int[,] heuristic = new int[iRows, iCols];
                 for (int x = 0; x < 13; x++)
                 {
                     for (int y = 0; y < 10; y++)
+                    {
                         heuristic[x, y] = Math.Abs(X - x) + Math.Abs(Y - y);
+                    }
                 }
-
-                while (iFront != iRear)                 // while Q not empty	
+              
+                while (iFront != iRear)                 // while Q is not empty	
                 {
                     if (Queue[iFront] == iStop)         // maze is solved
                         break;
 
                     iCurrent = Queue[iFront];
 
-                    int hTop = 999, hDown = 999, hLeft = 999, hRight = 999; // default value
-                    int[] sequence = { hTop, hDown, hLeft, hRight };
+                    int hTop = 999, hDown = 999, hLeft = 999, hRight = 999; // default heuristic value
 
                     // checking the heuristic values
                     iTop = iCurrent - iCols;
@@ -208,13 +208,15 @@ namespace MazePathSolver
                     if (iRight < iMax && iRight / iCols == iCurrent / iCols)
                         hRight = GetNodeContents(heuristic, iRight);
 
-                    //sort values in assending order
+
+                    int[] sequence = { hTop, hDown, hLeft, hRight };
+                    //sort heuristic values in assending order
                     Array.Sort(sequence);          
 
-                    for (int i = 0; i < sequence.Length; i++)   
+                    for (int i = 0; i < sequence.Length; i++) 
                     {
                         if (iTop >= 0)                  //if top node exists
-                            if (GetNodeContents(m_iMaze, iTop) == empty)
+                            if (GetNodeContents(m_iMaze, iTop) == empty)    //if top node is open(a path exists)
                                 if (GetNodeContents(iMazeStatus, iTop) == (int)Status.Ready)    //if top node is ready
                                 {
                                     if (sequence[i] == hTop)
@@ -227,7 +229,7 @@ namespace MazePathSolver
                                 }
 
                         if (iDown < iMax)               //if bottom node exists
-                            if (GetNodeContents(m_iMaze, iDown) == empty)
+                            if (GetNodeContents(m_iMaze, iDown) == empty)   //if bottom node is open(a path exists)
                                 if (GetNodeContents(iMazeStatus, iDown) == (int)Status.Ready)   //if bottom node is ready
                                 {
                                     if (sequence[i] == hDown)
@@ -240,7 +242,7 @@ namespace MazePathSolver
                                 }
 
                         if (iLeft >= 0 && iLeft / iCols == iCurrent / iCols)    //if left node exists
-                            if (GetNodeContents(m_iMaze, iLeft) == empty)
+                            if (GetNodeContents(m_iMaze, iLeft) == empty)       //if left node is open(a path exists)
                                 if (GetNodeContents(iMazeStatus, iLeft) == (int)Status.Ready)   //if left node is ready
                                 {
                                     if (sequence[i] == hLeft)
@@ -253,7 +255,7 @@ namespace MazePathSolver
                                 }
 
                         if (iRight < iMax && iRight / iCols == iCurrent / iCols)    //if right node exists
-                            if (GetNodeContents(m_iMaze, iRight) == empty)
+                            if (GetNodeContents(m_iMaze, iRight) == empty)  //if right node is open(a path exists)
                                 if (GetNodeContents(iMazeStatus, iRight) == (int)Status.Ready)  //if right node is ready
                                 {
                                     if (sequence[i] == hRight)
@@ -293,7 +295,7 @@ namespace MazePathSolver
             }
             else // BREADTH FIRST SEARCH
             {
-                while (iFront != iRear) // while Q not empty	
+                while (iFront != iRear) // while Q is not empty	
                 {
                     if (Queue[iFront] == iStop)     // maze is solved
                         break;
