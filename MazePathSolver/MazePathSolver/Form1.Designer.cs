@@ -1,6 +1,8 @@
-﻿namespace MazePathSolver
+﻿using System.Windows.Forms;
+
+namespace MazePathSolver
 {
-    partial class Form1
+    partial class Form1 : Form
     {
         /// <summary>
         /// Required designer variable.
@@ -37,4 +39,3 @@
         #endregion
     }
 }
-
